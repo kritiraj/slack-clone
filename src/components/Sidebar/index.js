@@ -2,8 +2,10 @@ import React from 'react'
 import {SidebarContainer,SidebarHeader,SidebarInfo} from './style'
 import {FiberManualRecord,Create,InsertComment,Inbox,Drafts,BookmarkBorder,PeopleAlt,Apps,FileCopy,ExpandLess, ExpandMore, Add} from '@material-ui/icons'
 import SidebarOption from '../SidebarOption';
-
+import {db} from '../../firebase';
+import {useCollection} from 'react-firebase-hooks/firestore';
 function Sidebar() {
+    const [channels,loading,error]= useCollection(db.collection("rooms"))
     return (
         <SidebarContainer>
             <SidebarHeader>
@@ -28,6 +30,10 @@ function Sidebar() {
             <SidebarOption Icon={ExpandMore} title="Channels" />
             <hr/>
             <SidebarOption Icon={Add} addChannelOption title="Add Channel" />
+            {channels?.docs.map((doc)=>{
+                return (
+                <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
+            )})}
         </SidebarContainer>
     )
 }
