@@ -47,3 +47,7 @@ export const SidebarInfo=styled.div`
         color: green;
     }
 `;
+export const SidebarOptionChannel=styled.h3`
+padding:10px 0;
+font-weight:300;
+`
